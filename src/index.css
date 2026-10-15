@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --color-ink: #15171C;
+  --color-ink-soft: #565D68;
+  --color-paper: #F2F3F5;
+  --color-surface: #FFFFFF;
+  --color-line: #DEE1E6;
+  --color-accent: #3D5AFE;
+  --color-accent-ink: #FFFFFF;
+  --color-good: #1F7A4D;
+  --color-bad: #C13B2A;
+  --color-wait: #8A6D00;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+/* signature element: audio-amplitude waveform, used in the avatar state
+   pill and the mic button while listening/speaking */
+.waveform {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 12px;
+}
+.waveform .bar {
+  width: 2px;
+  height: 4px;
+  border-radius: 2px;
+  background: currentColor;
+  animation: wave 0.9s ease-in-out infinite;
+}
+.waveform .bar:nth-child(1) { animation-delay: 0s; }
+.waveform .bar:nth-child(2) { animation-delay: 0.15s; }
+.waveform .bar:nth-child(3) { animation-delay: 0.3s; }
+.waveform .bar:nth-child(4) { animation-delay: 0.45s; }
+@keyframes wave {
+  0%, 100% { height: 4px; }
+  50% { height: 12px; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise { animation: rise 0.35s ease-out both; }
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 45%, transparent); }
+  50% { box-shadow: 0 0 0 8px transparent; }
+}
+.pulse-ring { animation: pulse-ring 1.4s ease-in-out infinite; }
