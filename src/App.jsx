@@ -8,6 +8,8 @@ import UsersPage from "./pages/Admin/UsersPage";
 import NotFound from "./pages/NotFound/NotFound";
 import Forbidden from "./pages/NotFound/Forbidden";
 import { ROLES } from "./lib/roles";
+import ScormPlayer from "./components/ScormPlayer";
+import Courses from "./pages/Courses/Courses";
 
 export default function App() {
   return (
@@ -23,6 +25,14 @@ export default function App() {
             element={
               <RoleGuard allowed={[ROLES.ADMIN, ROLES.UPLOADER]}>
                 <PackagesPage />
+              </RoleGuard>
+            }
+          />
+          <Route
+            path="scromplayer"
+            element={
+              <RoleGuard allowed={[ROLES.ADMIN, ROLES.UPLOADER]}>
+                <Courses />
               </RoleGuard>
             }
           />

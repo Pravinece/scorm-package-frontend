@@ -1,0 +1,62 @@
+// src/scorm/loadCourse.js
+
+import { parseManifest } from "../../scorm/manifest";
+import instance from "../../utils/service";
+
+
+// export async function loadCourse(packageId, token) {
+//   const res = await instance(`/packages/${packageId}/manifest`);
+//   if (!res.ok) throw new Error("Failed to load manifest");
+//   const xmlText = await res.text();
+
+//   const parsed = parseManifest(xmlText); // your adapted parseManifest
+
+//   return {
+//     id: packageId,
+//     title: parsed.title,
+//     version: parsed.version,
+//     launchUrl: `${API_BASE}/packages/${packageId}/content/${parsed.href}`,
+//     launchData: parsed.launchData || "",
+//     masteryScore: parsed.masteryScore || "",
+//     scaledPassingScore: parsed.scaledPassingScore || "",
+//   };
+// }
+
+export async function loadCourse(packageId) {
+  try {
+    const res = await instance.get(`/packages/${packageId}/manifest`, {
+      responseType: 'text',          // important
+    });
+
+    const xmlText = res.data;        // already a string
+
+    console.log('Manifest XML length:', xmlText.length);
+
+    const parsed = parseManifest(xmlText);
+    console.log('Parsed result:', parsed);
+
+    if (!parsed.href) {
+      throw new Error('No launch href found in manifest');
+    }
+
+    // Make sure API_BASE is correct
+    // Either use the same baseURL from your axios instance
+    // or hardcode it:
+    const API_BASE = import.meta.env.VITE_API_URL; // or whatever you use
+
+    const launchUrl = `${API_BASE}/packages/${packageId}/content/${parsed.href}`;
+
+    return {
+      id: packageId,
+      title: parsed.title || 'SCORM Course',
+      version: parsed.version || '1.2',
+      launchUrl,
+      launchData: parsed.launchData || '',
+      masteryScore: parsed.masteryScore || '',
+      scaledPassingScore: parsed.scaledPassingScore || '',
+    };
+  } catch (err) {
+    console.error('loadCourse error:', err);
+    throw err;
+  }
+}

@@ -1,0 +1,31 @@
+.player { display: flex; flex-direction: column; height: 100%; }
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: none;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.35rem 0.8rem 0.35rem 0.5rem;
+}
+.back:hover { border-color: var(--accent); color: var(--accent); }
+.title { flex: 1; min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.meta { display: flex; align-items: center; gap: 1rem; color: var(--muted); font-size: 0.9rem; white-space: nowrap; }
+.status { color: var(--ink); font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
+.status::before { content: ""; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--line); }
+.status.done::before { background: var(--ok); }
+.status.fail::before { background: var(--bad); }
+.frame { flex: 1; width: 100%; border: 0; background: #fff; }
+
+@media (max-width: 560px) {
+  .meta span:first-child { display: none; }
+}

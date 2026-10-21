@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { MessageCircle, PackageSearch, Users, X, Sparkles } from "lucide-react";
+import { MessageCircle, PackageSearch, Users, X, Sparkles, Video } from "lucide-react";
 import { canUpload, isAdmin } from "../lib/roles";
 
 export default function Sidebar({ open, onClose }) {
@@ -8,6 +8,7 @@ export default function Sidebar({ open, onClose }) {
     { path: "/", icon: MessageCircle, label: "Chat", visible: true, end: true },
     { path: "/packages", icon: PackageSearch, label: "Packages", visible: canUpload() },
     { path: "/users", icon: Users, label: "Users", visible: isAdmin() },
+    { path: "/scromplayer", icon: Video, label: "Scorm Player", visible:  isAdmin() }
   ];
 
   const location = useLocation();
