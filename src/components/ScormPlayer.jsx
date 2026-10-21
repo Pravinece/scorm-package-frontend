@@ -38,6 +38,9 @@ export default function ScormPlayer({ course, onBack }) {
     }
   }, [course])
 
+  console.log(window.API);
+  console.log(window.API_1484_11);
+
   function back() {
     runtime.current?.flush() // save progress even if the course never called Finish/Terminate
     onBack()
