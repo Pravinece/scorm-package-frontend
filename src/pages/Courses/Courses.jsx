@@ -17,6 +17,7 @@ export default function Courses({ token }) {
   }, [token]);
 
   async function playPackage(pkg) {
+    console.log('pkg: ', pkg);
     setLoading(true);
     try {
       const course = await loadCourse(pkg._id, token);

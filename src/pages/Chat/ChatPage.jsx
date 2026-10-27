@@ -8,6 +8,7 @@ import { Select, Button, EmptyState } from "../../components/ui";
 import useSpeech from "../../hooks/useSpeech";
 import { toast } from "../../store/toastStore";
 import { Mic, Send, Volume2, SkipForward, PackageX } from "lucide-react";
+import PlayScorm from "../Courses/PlayScorm";
 
 const PROCESSING = new Set(["queued", "unzipping", "extracting", "chunking", "indexing", "transcribing"]);
 
@@ -135,12 +136,16 @@ export default function ChatPage() {
         )}
       </div>
 
-      <div className="flex flex-col bg-[var(--color-surface)] border border-[var(--color-line)] rounded-xl overflow-hidden min-h-0">
+    <div className="w-full h-full">
+      <div className="w-full h-[65%] m-2">
+        <PlayScorm packageId={packageId} packages={packages} />
+      </div>
+      <div className="flex flex-col bg-[var(--color-surface)] border border-[var(--color-line)] rounded-xl overflow-hidden min-h-0 h-[30%]">
         {packages.length === 0 && !loadingPackages ? (
           <EmptyState
-            icon={PackageX}
-            title="No packages yet"
-            description="Ask an admin or uploader to add a SCORM package before chatting."
+          icon={PackageX}
+          title="No packages yet"
+          description="Ask an admin or uploader to add a SCORM package before chatting."
           />
         ) : (
           <>
@@ -157,17 +162,17 @@ export default function ChatPage() {
                 send(input);
               }}
               className="flex items-end gap-2 p-3 border-t border-[var(--color-line)]"
-            >
+              >
               <button
                 type="button"
                 onClick={handleMic}
                 title="Talk instead of typing"
                 className={`w-10 h-10 flex-shrink-0 rounded-lg border flex items-center justify-center transition-colors ${
                   listening
-                    ? "bg-[var(--color-accent)] border-[var(--color-accent)] text-white pulse-ring"
-                    : "border-[var(--color-line)] text-[var(--color-ink-soft)] hover:border-[var(--color-accent)]"
+                  ? "bg-[var(--color-accent)] border-[var(--color-accent)] text-white pulse-ring"
+                  : "border-[var(--color-line)] text-[var(--color-ink-soft)] hover:border-[var(--color-accent)]"
                 }`}
-              >
+                >
                 <Mic size={16} />
               </button>
               <textarea
@@ -182,7 +187,7 @@ export default function ChatPage() {
                 }}
                 placeholder={listening ? "Listening…" : "Ask me anything about this course, or tap the mic…"}
                 className="flex-1 resize-none max-h-28 px-3 py-2.5 rounded-lg border border-[var(--color-line)] bg-[var(--color-paper)] text-[14px] outline-none focus:border-[var(--color-ink)]"
-              />
+                />
               <Button type="submit" variant="accent" disabled={sending || !isReady}>
                 <Send size={14} />
               </Button>
@@ -190,6 +195,7 @@ export default function ChatPage() {
           </>
         )}
       </div>
+    </div>
     </div>
   );
 }
